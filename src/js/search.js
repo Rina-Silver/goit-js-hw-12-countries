@@ -19,7 +19,6 @@ fetch('https://restcountries.eu/rest/v2/name/eesti')
     .then(country => {
         console.log(country);
         const markup = countryCardTemp(country);
-        //console.log(markup);
-        //document.querySelector('.cards');
+        refs.articleCard.innerHTML = markup;
     })
     .catch(error => console.error(error));
