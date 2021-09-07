@@ -1,0 +1,26 @@
+
+  <article class="card">
+      <h2 class="card__name">{{name}}</h2>
+    <img
+      src="{{flag}}"
+      alt="{{name}}"
+      class="card__image"
+    />
+    <div class="card__content">
+      <p class="card__capital">
+        <b>Capital: </b>{{capital}} 
+      </p>
+
+      <p class="card__population">
+        <b>Population: </b>{{population}} 
+      </p>
+
+      <ul class="lang-list">
+        <b>Languages:</b>
+          {{#each languages}}
+        <li class="lang-list__item">{{this.name}}</li>
+        {{/each }}
+      </ul>
+    </div>
+  </article>
+
