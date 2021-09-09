@@ -20,7 +20,7 @@ fetch('https://restcountries.eu/rest/v2/name/eesti')
     .catch(error => console.error(error));
 
 function renderCountryCard(country) {
-    const markup = countryCardTemp(country);
+    const markup = countryCardTemp(country[0]);
     refs.articleCard.innerHTML = markup;
     console.log(markup);
 }
