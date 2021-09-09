@@ -16,9 +16,12 @@ fetch('https://restcountries.eu/rest/v2/name/eesti')
     .then(response => {
         return response.json();
     })
-    .then(country => {
-        console.log(country);
-        const markup = countryCardTemp(country);
-        refs.articleCard.innerHTML = markup;
-    })
+    .then(renderCountryCard)
     .catch(error => console.error(error));
+
+function renderCountryCard(country) {
+    console.log(country);
+
+    const markup = countryCardTemp(country);
+    refs.articleCard.innerHTML = markup;
+}
