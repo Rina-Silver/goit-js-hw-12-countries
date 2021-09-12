@@ -1,5 +1,5 @@
 import API from '../js/fetchCountries.js';
-import { searchForm, cardContainer } from '../js/refs.js';
+import { searchForm, cardContainer, searchBtn } from '../js/refs.js';
 
 import countryCardTemp from '../templates/country-card.hbs';
 import countriesListTemp from '../templates/countries-card-list.hbs';
@@ -10,6 +10,10 @@ const { info, error } = require('@pnotify/core');
 import debounce from 'lodash.debounce';
 
 searchForm.addEventListener('input', debounce(onSearch, 500));
+searchBtn.addEventListener('click', () => {
+    searchForm.value = '';
+    clearList();
+});
 
 function onSearch(e) {
     e.preventDefault();
