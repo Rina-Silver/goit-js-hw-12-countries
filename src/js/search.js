@@ -1,10 +1,11 @@
-import { searchForm, cardsList, articleCard } from './refs.js';
+import fetchCountries from '../js/fetchCountries.js';
 
 import countryCardTemp from '../templates/country-card.hbs';
 import countriesListTemp from '../templates/countries-card-list.hbs';
 
+import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
-const { error } = require('@pnotify/core');
+const { info, error } = require('@pnotify/core');
 const debounce = require('lodash.debounce');
 
 // const data = {
@@ -12,26 +13,26 @@ const debounce = require('lodash.debounce');
 // };
 // document.body.innerHTML = countryCardTemp(data);
 
-searchForm.addEventListener('input', onSearch);
+const refs = {
+    searchForm: document.querySelector('.search-control'),
+    cardContainer: document.querySelector('.js-card-container'),
+};
+
+refs.searchForm.addEventListener('input', onSearch);
 
 function onSearch(e) {
     e.preventDefault();
-    const input = e.currentTarget;
-    const searchQuery = input.elements.query.value;
 
-    fetchCountryByName(searchQuery)
+    const searchQuery = e.target.value;
+
+    fetchCountries(searchQuery)
         .then(renderCountryCard)
-        .catch(error => console.error(error));
-}
-
-function fetchCountryByName(countryName) {
-    return fetch(`https://restcountries.eu/rest/v2/name/${countryName}`).then(response => {
-        return response.json();
-    });
+        .catch(error => console.error(error))
+        .finally(() => refs.searchForm.value === '');
 }
 
 function renderCountryCard(country) {
     const markup = countryCardTemp(country[0]);
-    articleCard.innerHTML = markup;
-    console.log(markup);
+    refs.cardContainer.innerHTML = markup;
+    //console.log(markup);
 }
