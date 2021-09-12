@@ -13,7 +13,7 @@ searchForm.addEventListener('input', debounce(onSearch, 500));
 
 function onSearch(e) {
     e.preventDefault();
-    //cardContainer.innerHTML = '';
+    clearList();
     const searchQuery = e.target.value.trim();
     if (!searchQuery) {
         return;
@@ -23,9 +23,18 @@ function onSearch(e) {
 }
 
 function renderCountryCard(country) {
-    const markup = countryCardTemp(country[0]);
-    cardContainer.innerHTML = markup;
-    //console.log(markup);
+    if (country.length > 10) {
+        clearList();
+        info({
+            title: 'Сделайте запрос более специфичным',
+            text: 'Под наименование подходит более 10 стран',
+            delay: 3000,
+            width: '500px',
+            sticker: false,
+        });
+    } else if (country.length === 1) {
+        cardContainer.innerHTML = countryCardTemp(country[0]);
+    } else cardContainer.innerHTML = countriesListTemp(country);
 }
 
 function onFetchError() {
@@ -36,4 +45,8 @@ function onFetchError() {
         width: '500px',
         sticker: false,
     });
+}
+
+function clearList() {
+    cardContainer.innerHTML = '';
 }
