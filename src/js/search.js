@@ -1,4 +1,4 @@
-import refs from './refs.js';
+import { searchForm, cardsList, articleCard } from './refs.js';
 
 import countryCardTemp from '../templates/country-card.hbs';
 import countriesListTemp from '../templates/countries-card-list.hbs';
@@ -12,15 +12,26 @@ const debounce = require('lodash.debounce');
 // };
 // document.body.innerHTML = countryCardTemp(data);
 
-fetch('https://restcountries.eu/rest/v2/name/eesti')
-    .then(response => {
+searchForm.addEventListener('input', onSearch);
+
+function onSearch(e) {
+    e.preventDefault();
+    const input = e.currentTarget;
+    const searchQuery = input.elements.query.value;
+
+    fetchCountryByName(searchQuery)
+        .then(renderCountryCard)
+        .catch(error => console.error(error));
+}
+
+function fetchCountryByName(countryName) {
+    return fetch(`https://restcountries.eu/rest/v2/name/${countryName}`).then(response => {
         return response.json();
-    })
-    .then(renderCountryCard)
-    .catch(error => console.error(error));
+    });
+}
 
 function renderCountryCard(country) {
     const markup = countryCardTemp(country[0]);
-    refs.articleCard.innerHTML = markup;
+    articleCard.innerHTML = markup;
     console.log(markup);
 }
