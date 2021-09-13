@@ -38,13 +38,22 @@ function renderCountryCard(country) {
         });
     } else if (country.length === 1) {
         cardContainer.innerHTML = countryCardTemp(country[0]);
-    } else cardContainer.innerHTML = countriesListTemp(country);
+    } else if (country.length > 1 && country.length <= 10) {
+        cardContainer.innerHTML = countriesListTemp(country);
+    } else
+        error({
+            title: 'Введено некорректное название страны',
+            text: 'Попробуйте ввести запрос иначе',
+            delay: 2000,
+            width: '500px',
+            sticker: false,
+        });
 }
 
 function onFetchError() {
     error({
-        title: 'Введено некорректное название страны',
-        text: 'Попробуйте ввести запрос иначе',
+        title: 'Извините, что-то пошло не так',
+        text: 'Попробуйте позже',
         delay: 2000,
         width: '500px',
         sticker: false,
